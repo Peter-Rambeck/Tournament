@@ -56,7 +56,7 @@ abstract public class Tournament {
         }
     }
 
-    protected Team registerTeam(String teamName, String[] teamMembers) {
+    public Team registerTeam(String teamName, String[] teamMembers) {
         Team team = new Team(teamName, teamMembers);
         teams.add(team);
         return team;

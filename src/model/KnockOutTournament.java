@@ -1,5 +1,8 @@
 package model;
 
+import Utils.TeamDataLoader;
+
+import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 
 public class KnockOutTournament extends Tournament {
@@ -12,6 +15,11 @@ public class KnockOutTournament extends Tournament {
         System.out.println("I am a knockOut Tournament");
 
     }
+
+    public void registerTeams(String filename) throws FileNotFoundException {
+        TeamDataLoader.importTeams(filename, this);
+    }
+
     public void runTest(){
         /** USE CASE 1: Register teams that will play the tournament
          *  Providing team names and player details teams are enrolled in the tournament
@@ -21,15 +29,16 @@ public class KnockOutTournament extends Tournament {
 
 
         // smells funky here!  - TODO: refactor - extract data, create data util class
+        private void registerTeams(String filename) {
+            try {
+                TeamDataLoader.importTeams("Data/teams.csv", this);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-        Team team1 = registerTeam("Kongelunden",new String[]{"Tess","Leif"});
-        Team team2 = registerTeam("Islands Brygge",new String[]{"Irma","Storm"});
-        Team team3 = registerTeam("Hellerup",new String[]{"Coco","Cleo"});
-        Team team4 = registerTeam("Frederiksberg",new String[]{"Sarah","Kasper"});
-        Team team5 = registerTeam("Christianshavn",new String[]{"Emma","Indigo"});
-        Team team6 = registerTeam("Plumstead",new String[]{"Mary","Martin"});
-        Team team7 = registerTeam("Vedersø",new String[]{"Bodil","Svaage"});
-        Team team8 = registerTeam("Allerslev",new String[]{"Stina","Torben"});
+
         /** USE CASE 2: See which teams  are currently registered to the tournament
          *  It should be possible to sort the teams in various ways, (natural, points, alphabetical etc.)
          * */
@@ -61,11 +70,13 @@ public class KnockOutTournament extends Tournament {
          * matches are normally sheduled before we know which teams will be playing them,
          * so we need some way of adding teams to sheduled matches seperately.
          */
-
+/*
         updateMatch(match1, team1, team2);
         updateMatch(match2, team3, team4);
         updateMatch(match3, team5, team6);
         updateMatch(match4, team7, team8);
+
+ */
 
         displayMatches();//After teams and before results
 
@@ -97,5 +108,13 @@ public class KnockOutTournament extends Tournament {
         displayMatches();//After teams and after all results
 
 
+    }
+
+    private void registerTeams() {
+        try {
+            TeamDataLoader.importTeams("Data/teams.csv", this);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
